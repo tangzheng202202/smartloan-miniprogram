@@ -1,6 +1,6 @@
 {
   "description": "智贷计算器微信小程序项目配置文件",
-  "appid": "touristappid",
+  "appid": "wx538968ade9027bfd",
   "compileType": "miniprogram",
   "libVersion": "3.4.0",
   "setting": {
@@ -12,8 +12,14 @@
   },
   "packOptions": {
     "ignore": [
-      { "type": "folder", "value": "test" },
-      { "type": "file", "value": "package.json" }
+      {
+        "type": "folder",
+        "value": "test"
+      },
+      {
+        "type": "file",
+        "value": "package.json"
+      }
     ]
   },
   "projectname": "smartloan-calc-miniprogram"

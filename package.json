@@ -1,0 +1,9 @@
+{
+  "name": "smartloan-calc-miniprogram",
+  "version": "0.1.0",
+  "private": true,
+  "description": "智贷计算器微信小程序（计算结果仅供参考，以银行实际审批为准）",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

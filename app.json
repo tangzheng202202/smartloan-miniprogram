@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/calculator/calculator",
+    "pages/schedule/schedule",
+    "pages/plans/plans",
+    "pages/my/my"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "智贷计算器",
+    "backgroundColor": "#f5f6fa"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1A6BFF",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/calculator/calculator",
+        "text": "计算器",
+        "iconPath": "images/tab_calculator.png",
+        "selectedIconPath": "images/tab_calculator_active.png"
+      },
+      {
+        "pagePath": "pages/plans/plans",
+        "text": "方案库",
+        "iconPath": "images/tab_plans.png",
+        "selectedIconPath": "images/tab_plans_active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "images/tab_my.png",
+        "selectedIconPath": "images/tab_my_active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

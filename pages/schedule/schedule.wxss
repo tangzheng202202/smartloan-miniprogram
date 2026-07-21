@@ -1,0 +1,177 @@
+/* 还款计划表页：简洁卡片式，主题蓝 #1A6BFF，浅色 */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #F5F6FA;
+  box-sizing: border-box;
+  padding: 24rpx 24rpx 0;
+}
+
+/* —— 汇总卡 —— */
+.summary-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(26, 107, 255, 0.06);
+}
+
+.summary-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  font-size: 28rpx;
+  color: #666A73;
+}
+
+.summary-months {
+  font-size: 24rpx;
+  color: #9AA0AB;
+}
+
+.summary-amount {
+  margin-top: 12rpx;
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #1A6BFF;
+  letter-spacing: 1rpx;
+}
+
+.summary-sub {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #9AA0AB;
+}
+
+.summary-stats {
+  display: flex;
+  margin-top: 28rpx;
+  gap: 20rpx;
+}
+
+.stat-box {
+  flex: 1;
+  background: #F5F6FA;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #9AA0AB;
+}
+
+.stat-value {
+  margin-top: 8rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2B2F36;
+}
+
+/* —— 复制按钮 —— */
+.copy-btn {
+  margin: 24rpx 0;
+  background: #1A6BFF;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 999rpx;
+  line-height: 2.6;
+}
+
+.copy-btn::after {
+  border: none;
+}
+
+/* —— 明细滚动区 —— */
+.schedule-scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.table-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 16rpx 20rpx;
+}
+
+.table-header,
+.table-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+}
+
+.table-header {
+  border-bottom: 1rpx solid #EEF0F4;
+}
+
+.table-header .col {
+  font-size: 24rpx;
+  color: #9AA0AB;
+  font-weight: 600;
+}
+
+.col {
+  flex: 1;
+  font-size: 24rpx;
+  color: #2B2F36;
+  text-align: right;
+  overflow: hidden;
+}
+
+.col-month {
+  flex: 0 0 80rpx;
+  text-align: left;
+  color: #9AA0AB;
+}
+
+.row-even {
+  background: #F8F9FC;
+  border-radius: 8rpx;
+}
+
+.combined-mini {
+  display: block;
+  font-size: 18rpx;
+  color: #9AA0AB;
+  margin-top: 4rpx;
+}
+
+/* —— 分组头 —— */
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22rpx 8rpx;
+  border-bottom: 1rpx solid #EEF0F4;
+}
+
+.group-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1A6BFF;
+}
+
+.group-arrow {
+  font-size: 26rpx;
+  color: #9AA0AB;
+  transition: transform 0.2s;
+}
+
+.group-arrow-open {
+  transform: rotate(180deg);
+}
+
+/* —— 页脚免责声明 —— */
+.disclaimer {
+  margin: 24rpx 0 40rpx;
+  background: #EEF0F4;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  font-size: 24rpx;
+  color: #9AA0AB;
+  text-align: center;
+}

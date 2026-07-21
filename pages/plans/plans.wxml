@@ -1,0 +1,42 @@
+<view class="page-container">
+  <view class="page-title">方案库</view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{plans.length === 0}}" class="empty-state">
+    <view class="empty-icon">📁</view>
+    <view class="empty-title">还没有保存的方案</view>
+    <view class="empty-desc">在计算器页完成计算后保存方案，即可在这里随时查看与对比</view>
+    <button class="empty-btn" bindtap="onGoCalculator">去算一笔</button>
+  </view>
+
+  <!-- 方案卡片列表 -->
+  <view wx:else class="plan-list">
+    <view class="list-tip">共 {{plans.length}} 个方案 · 点击卡片回填计算器对比 · 长按删除</view>
+    <view
+      wx:for="{{plans}}"
+      wx:key="id"
+      class="plan-card"
+      data-id="{{item.id}}"
+      bindtap="onTapPlan"
+      bindlongpress="onLongPressPlan"
+    >
+      <view class="plan-card-header">
+        <view class="plan-name">{{item.name}}</view>
+        <view class="plan-time">{{item.createdAtText}}</view>
+      </view>
+      <view class="plan-monthly">
+        <text class="plan-monthly-label">月供</text>
+        <text class="plan-monthly-value">¥{{item.monthlyPaymentText}}</text>
+      </view>
+      <view class="plan-footer">
+        <view class="plan-footer-item">
+          <text class="plan-footer-label">总利息</text>
+          <text class="plan-footer-value">¥{{item.totalInterestText}}</text>
+        </view>
+        <view class="plan-delete" catchtap="onLongPressPlan" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="disclaimer">计算结果仅供参考，以银行实际审批为准</view>
+</view>

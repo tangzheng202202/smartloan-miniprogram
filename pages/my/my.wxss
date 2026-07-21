@@ -1,0 +1,143 @@
+.page-container {
+  min-height: 100vh;
+  background: #f5f6fa;
+  padding: 32rpx 32rpx 64rpx;
+  box-sizing: border-box;
+}
+
+.page-title {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 32rpx;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 24rpx;
+}
+
+/* 设置项 */
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.setting-row:last-of-type {
+  border-bottom: none;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.setting-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 16rpx;
+  padding: 12rpx 24rpx;
+  min-width: 220rpx;
+}
+
+.setting-input {
+  font-size: 28rpx;
+  text-align: right;
+  flex: 1;
+}
+
+.setting-unit {
+  font-size: 26rpx;
+  color: #999999;
+  margin-left: 12rpx;
+}
+
+.setting-tip {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #aaaaaa;
+}
+
+/* 意见反馈 */
+.feedback-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback-title {
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.feedback-desc {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.feedback-arrow {
+  font-size: 48rpx;
+  color: #1A6BFF;
+  margin-left: 24rpx;
+}
+
+/* 免责声明 */
+.disclaimer-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* 关于 */
+.about-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+}
+
+.about-label {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.about-value {
+  font-size: 28rpx;
+  color: #1a1a1a;
+}
+
+.about-privacy-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin: 24rpx 0 12rpx;
+}
+
+.about-privacy {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.8;
+}
+
+.disclaimer {
+  margin-top: 48rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #aaaaaa;
+}

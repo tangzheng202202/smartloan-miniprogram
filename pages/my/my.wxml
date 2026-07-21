@@ -1,0 +1,80 @@
+<view class="page-container">
+  <view class="page-title">我的</view>
+
+  <!-- 默认计算设置 -->
+  <view class="card">
+    <view class="card-title">默认计算设置</view>
+    <view class="setting-row">
+      <view class="setting-label">默认年利率</view>
+      <view class="setting-input-wrap">
+        <input
+          class="setting-input"
+          type="digit"
+          placeholder="如 3.40"
+          value="{{annualRate}}"
+          bindinput="onRateInput"
+        />
+        <text class="setting-unit">%</text>
+      </view>
+    </view>
+    <view class="setting-row">
+      <view class="setting-label">默认贷款期限</view>
+      <view class="setting-input-wrap">
+        <input
+          class="setting-input"
+          type="number"
+          placeholder="如 30"
+          value="{{years}}"
+          bindinput="onYearsInput"
+        />
+        <text class="setting-unit">年</text>
+      </view>
+    </view>
+    <view class="setting-tip">保存后，计算器页将以此作为初始默认值</view>
+  </view>
+
+  <!-- 意见反馈 -->
+  <view class="card">
+    <view class="card-title">意见反馈</view>
+    <view class="feedback-row" bindtap="onFeedback">
+      <view class="feedback-text">
+        <view class="feedback-title">遇到问题或有建议？</view>
+        <view class="feedback-desc">点击复制邮箱 {{feedbackEmail}} 或联系在线客服</view>
+      </view>
+      <view class="feedback-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 免责声明 -->
+  <view class="card">
+    <view class="card-title">免责声明</view>
+    <view class="disclaimer-text">
+      1. 本小程序提供的所有计算结果（包括但不限于月供、总利息、总还款、还款计划、提前还款测算、偿债收入比等）均为基于公开数学公式的理论测算，仅供参考，不构成任何贷款建议、财务建议或要约。
+      2. 实际贷款的年利率、月供、费用及审批条件以银行等金融机构的最终审批与合同约定为准，可能与本工具测算结果存在差异。
+      3. 各地房贷政策（首付比例、利率下限等）可能随时调整，相关政策信息请以当地主管部门及贷款银行的最新规定为准。
+      4. 因使用本工具的计算结果而产生的任何直接或间接损失，开发者不承担相应责任。
+      5. 计算结果仅供参考，以银行实际审批为准。
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="card">
+    <view class="card-title">关于</view>
+    <view class="about-row">
+      <text class="about-label">应用名称</text>
+      <text class="about-value">智贷计算器</text>
+    </view>
+    <view class="about-row">
+      <text class="about-label">版本号</text>
+      <text class="about-value">{{version}}</text>
+    </view>
+    <view class="about-privacy-title">隐私政策要点</view>
+    <view class="about-privacy">
+      · 本小程序为纯本地计算工具，所有计算均在您的手机上完成。
+      · 我们不收集、不上传、不存储您的任何个人数据与贷款数据到服务器。
+      · 您保存的方案与设置仅存储在本机微信的本地缓存中，删除小程序即可清除全部数据。
+    </view>
+  </view>
+
+  <view class="disclaimer">计算结果仅供参考，以银行实际审批为准</view>
+</view>

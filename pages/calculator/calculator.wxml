@@ -1,0 +1,157 @@
+<!-- 计算器主页 -->
+<view class="page">
+
+  <!-- 贷款类型切换 -->
+  <view class="card">
+    <view class="seg">
+      <view
+        wx:for="{{categoryTabs}}"
+        wx:key="key"
+        class="seg-item {{category === item.key ? 'seg-item-active' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onCategoryTap"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <!-- 首付区（房贷/车贷） -->
+  <view class="card" wx:if="{{hasDown}}">
+    <view class="field-row">
+      <text class="field-label">{{category === 'mortgage' ? '房屋总价（元）' : '车辆总价（元）'}}</text>
+      <input class="field-input" type="digit" value="{{totalPriceText}}" bindinput="onTotalPriceInput" />
+    </view>
+    <view class="field-row">
+      <text class="field-label">首付比例 {{ratioPercent}}%</text>
+    </view>
+    <slider
+      class="ratio-slider"
+      min="15"
+      max="80"
+      step="1"
+      value="{{ratioPercent}}"
+      activeColor="#1A6BFF"
+      block-color="#1A6BFF"
+      block-size="22"
+      bindchange="onRatioChange"
+      bindchanging="onRatioChange"
+    />
+    <view class="field-row">
+      <text class="field-label">首付金额（元）</text>
+      <input class="field-input" type="digit" value="{{downPaymentText}}" bindinput="onDownPaymentInput" />
+    </view>
+    <view class="derived-row">
+      <text class="derived-label">贷款金额</text>
+      <text class="derived-value">{{loanAmountText}} 元</text>
+    </view>
+  </view>
+
+  <!-- 消费贷：直接输入贷款金额 -->
+  <view class="card" wx:else>
+    <view class="field-row">
+      <text class="field-label">贷款金额（元）</text>
+      <input class="field-input" type="digit" value="{{principalText}}" bindinput="onPrincipalInput" />
+    </view>
+  </view>
+
+  <!-- 期限与利率 -->
+  <view class="card">
+    <view class="field-row">
+      <text class="field-label">贷款期限（年）</text>
+      <input class="field-input" type="number" value="{{yearsText}}" bindinput="onYearsInput" />
+    </view>
+    <view class="field-row">
+      <text class="field-label">年利率（%）</text>
+      <input class="field-input" type="digit" value="{{rateText}}" bindinput="onRateInput" />
+    </view>
+  </view>
+
+  <!-- 组合贷 -->
+  <view class="card" wx:if="{{category === 'mortgage'}}">
+    <view class="field-row">
+      <text class="field-label">组合贷（公积金 + 商贷）</text>
+      <switch checked="{{isCombined}}" color="#1A6BFF" bindchange="onCombinedSwitch" />
+    </view>
+    <block wx:if="{{isCombined}}">
+      <view class="field-row">
+        <text class="field-label">公积金贷款金额（元）</text>
+        <input class="field-input" type="digit" value="{{fundText}}" bindinput="onFundInput" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">公积金年利率（%）</text>
+        <input class="field-input" type="digit" value="{{fundRateText}}" bindinput="onFundRateInput" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">商贷金额（元）</text>
+        <input class="field-input" type="digit" value="{{commercialText}}" bindinput="onCommercialInput" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">商贷年利率（%）</text>
+        <input class="field-input" type="digit" value="{{commercialRateText}}" bindinput="onCommercialRateInput" />
+      </view>
+    </block>
+  </view>
+
+  <!-- 还款方式 -->
+  <view class="card">
+    <view class="seg">
+      <view
+        wx:for="{{methodTabs}}"
+        wx:key="key"
+        class="seg-item {{method === item.key ? 'seg-item-active' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onMethodTap"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <!-- 结果区 -->
+  <view class="card result-card">
+    <text class="monthly-label">{{monthlyLabel}}</text>
+    <text class="monthly-value">{{monthlyText}}</text>
+    <text class="decrease" wx:if="{{decreaseText}}">{{decreaseText}}</text>
+    <view class="result-grid">
+      <view class="result-cell">
+        <text class="result-cell-label">总利息</text>
+        <text class="result-cell-value">{{totalInterestText}}</text>
+      </view>
+      <view class="result-cell">
+        <text class="result-cell-label">总还款</text>
+        <text class="result-cell-value">{{totalPaymentText}}</text>
+      </view>
+    </view>
+    <view class="cost-line" wx:if="{{downText}}">
+      <text>{{downText}}</text>
+      <text class="cost-dot">·</text>
+      <text>{{totalCostText}}</text>
+    </view>
+  </view>
+
+  <!-- 本金/利息占比饼图 -->
+  <view class="card chart-card">
+    <text class="chart-title">本金 / 利息占比</text>
+    <view class="chart-body">
+      <canvas canvas-id="pieChart" id="pieChart" class="pie-canvas"></canvas>
+      <view class="legend">
+        <view class="legend-item">
+          <view class="legend-dot legend-dot-principal"></view>
+          <text class="legend-text">{{principalLegend}}</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-dot legend-dot-interest"></view>
+          <text class="legend-text">{{interestLegend}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <button class="btn btn-primary" bindtap="onViewSchedule">查看还款计划表</button>
+    <button class="btn btn-outline" bindtap="onSavePlan">保存方案</button>
+  </view>
+
+  <!-- 页脚免责声明 -->
+  <view class="footer">
+    <text>{{disclaimer}}</text>
+  </view>
+</view>

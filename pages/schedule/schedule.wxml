@@ -1,0 +1,62 @@
+<view class="page">
+  <!-- 顶部汇总卡 -->
+  <view class="summary-card">
+    <view class="summary-top">
+      <view class="summary-title-row">
+        <text class="summary-label">{{summaryTitle}}（{{methodLabel}}）</text>
+        <text class="summary-months">共 {{months}} 期 · {{years}} 年</text>
+      </view>
+      <view class="summary-amount">¥{{monthlyPayment}}</view>
+      <view class="summary-sub" wx:if="{{monthlyDecrease}}">{{monthlyDecrease}}</view>
+      <view class="summary-sub" wx:if="{{isCombined}}">{{combinedSummary}}</view>
+    </view>
+    <view class="summary-stats">
+      <view class="stat-box">
+        <view class="stat-label">总利息</view>
+        <view class="stat-value">¥{{totalInterest}}</view>
+      </view>
+      <view class="stat-box">
+        <view class="stat-label">总还款</view>
+        <view class="stat-value">¥{{totalPayment}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 复制按钮 -->
+  <button class="copy-btn" bindtap="onCopySchedule">复制计划表文本</button>
+
+  <!-- 明细列表（按年分组折叠，长按表格也可复制） -->
+  <scroll-view class="schedule-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="table-card" bindlongpress="onCopySchedule">
+      <view class="table-header">
+        <text class="col col-month">期数</text>
+        <text class="col">月供</text>
+        <text class="col">本金</text>
+        <text class="col">利息</text>
+        <text class="col">剩余本金</text>
+      </view>
+
+      <block wx:for="{{groups}}" wx:key="yearIndex">
+        <view class="group-header" bindtap="onToggleGroup" data-index="{{index}}">
+          <text class="group-label">{{item.label}}</text>
+          <text class="group-arrow {{item.collapsed ? '' : 'group-arrow-open'}}">▾</text>
+        </view>
+        <block wx:if="{{!item.collapsed}}">
+          <view class="table-row {{row.month % 2 === 0 ? 'row-even' : ''}}" wx:for="{{item.rows}}" wx:for-item="row" wx:key="month">
+            <text class="col col-month">{{row.month}}</text>
+            <view class="col">
+              <text>{{row.payment}}</text>
+              <text class="combined-mini" wx:if="{{isCombined}}">{{row.combinedText}}</text>
+            </view>
+            <text class="col">{{row.principal}}</text>
+            <text class="col">{{row.interest}}</text>
+            <text class="col">{{row.remaining}}</text>
+          </view>
+        </block>
+      </block>
+    </view>
+
+    <!-- 页脚免责声明 -->
+    <view class="disclaimer">ⓘ {{disclaimer}}</view>
+  </scroll-view>
+</view>

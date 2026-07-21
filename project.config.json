@@ -8,7 +8,8 @@
     "enhance": true,
     "minified": true,
     "postcss": true,
-    "urlCheck": false
+    "urlCheck": false,
+    "minifyWXML": true
   },
   "packOptions": {
     "ignore": [

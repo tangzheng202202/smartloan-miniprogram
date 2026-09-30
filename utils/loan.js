@@ -75,7 +75,7 @@
  * CityPolicy.CITIES => 城市数组（key/nameZh/公积金上限/利率/首付下限/倍数/商贷浮动等）
  * CityPolicy.byKey(key) => city
  * CityPolicy.housingFundRate(city, houseType) => number
- * CityPolicy.commercialRate(city, houseType) => number   // LPR 3.5% + 浮动
+ * CityPolicy.commercialRate(city, houseType) => number|null   // 逐笔定价时无固定预设
  * CityPolicy.housingFundLoanable(city, { balance, spouseBalance=0, housePrice, houseType }) => 元
  * =====================================================================
  *

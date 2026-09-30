@@ -934,11 +934,15 @@ const CITIES = [
   {
     key: 'beijing', nameZh: '北京',
     maxHousingFundLoanFirst: 120, maxHousingFundLoanSecond: 100,
-    housingFundRateFirst: 0.0285, housingFundRateSecond: 0.03075,
+    // 2025-05-08 起新发放、期限 5 年以上的公积金贷款。
+    // https://gjj.beijing.gov.cn/web/zwgk61/2024zcwj/436433464/436433467/743903614/index.html
+    housingFundRateFirst: 0.026, housingFundRateSecond: 0.03075,
     minDownPaymentRatioFirst: 0.15, minDownPaymentRatioSecond: 0.25,
     maxLoanRatioFirst: 0.85, maxLoanRatioSecond: 0.75,
     balanceMultiplier: 15,
-    commercialFloatingFirst: -0.005, commercialFloatingSecond: 0.005,
+    // 2025-12-24 起北京商贷逐笔定价，不再按首套/二套设置固定利率浮动。
+    // https://www.beijing.gov.cn/gate/big5/www.beijing.gov.cn/zhengce/zhengcefagui/202512/t20251225_4361661.html
+    commercialFloatingFirst: null, commercialFloatingSecond: null,
   },
   {
     key: 'shanghai', nameZh: '上海',
@@ -1002,10 +1006,10 @@ const CityPolicy = {
     return houseType === HouseType.FIRST ? city.housingFundRateFirst : city.housingFundRateSecond;
   },
 
-  /** 商贷利率 = LPR + 浮动 */
+  /** 商贷利率 = LPR + 浮动；逐笔定价的城市返回 null。 */
   commercialRate(city, houseType) {
     const floating = houseType === HouseType.FIRST ? city.commercialFloatingFirst : city.commercialFloatingSecond;
-    return LPR_BASE + floating;
+    return floating == null ? null : LPR_BASE + floating;
   },
 
   /**

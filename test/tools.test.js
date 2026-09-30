@@ -70,10 +70,11 @@ describe('利率换算', () => {
 });
 
 describe('城市政策', () => {
-  test('北京：公积金上限120万、利率2.85%、首付15%', () => {
+  test('北京：新发放 5 年以上公积金贷款首套 2.6%、二套 3.075%', () => {
     const bj = CityPolicy.byKey('beijing');
     assert.equal(bj.maxHousingFundLoanFirst, 120);
-    assert.equal(bj.housingFundRateFirst, 0.0285);
+    assert.equal(CityPolicy.housingFundRate(bj, HouseType.FIRST), 0.026);
+    assert.equal(CityPolicy.housingFundRate(bj, HouseType.SECOND), 0.03075);
     assert.equal(bj.minDownPaymentRatioFirst, 0.15);
   });
 
@@ -109,9 +110,19 @@ describe('城市政策', () => {
     closeTo(loanable, 1200000, 0.01);
   });
 
-  test('商贷利率 = LPR + 浮动', () => {
-    closeTo(CityPolicy.commercialRate(CityPolicy.byKey('beijing'), HouseType.FIRST), 0.03, 1e-12);
-    closeTo(CityPolicy.commercialRate(CityPolicy.byKey('beijing'), HouseType.SECOND), 0.04, 1e-12);
+  test('低余额按元乘倍数，配偶余额只加一次', () => {
+    const city = CityPolicy.byKey('beijing');
+    const base = { balance: 1000, housePrice: 4500000, houseType: HouseType.FIRST };
+    assert.equal(CityPolicy.housingFundLoanable(city, base), 15000);
+    assert.equal(CityPolicy.housingFundLoanable(city, { ...base, spouseBalance: 1000 }), 30000);
+  });
+
+  test('北京商贷逐笔定价，不提供首套或二套固定参考值', () => {
+    assert.equal(CityPolicy.commercialRate(CityPolicy.byKey('beijing'), HouseType.FIRST), null);
+    assert.equal(CityPolicy.commercialRate(CityPolicy.byKey('beijing'), HouseType.SECOND), null);
+  });
+
+  test('其他城市商贷利率仍按静态 LPR + 浮动计算', () => {
     closeTo(CityPolicy.commercialRate(CityPolicy.byKey('shanghai'), HouseType.FIRST), 0.029, 1e-12);
   });
 });

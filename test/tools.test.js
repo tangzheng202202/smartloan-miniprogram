@@ -109,6 +109,13 @@ describe('城市政策', () => {
     closeTo(loanable, 1200000, 0.01);
   });
 
+  test('低余额按元乘倍数，配偶余额只加一次', () => {
+    const city = CityPolicy.byKey('beijing');
+    const base = { balance: 1000, housePrice: 4500000, houseType: HouseType.FIRST };
+    assert.equal(CityPolicy.housingFundLoanable(city, base), 15000);
+    assert.equal(CityPolicy.housingFundLoanable(city, { ...base, spouseBalance: 1000 }), 30000);
+  });
+
   test('商贷利率 = LPR + 浮动', () => {
     closeTo(CityPolicy.commercialRate(CityPolicy.byKey('beijing'), HouseType.FIRST), 0.03, 1e-12);
     closeTo(CityPolicy.commercialRate(CityPolicy.byKey('beijing'), HouseType.SECOND), 0.04, 1e-12);

@@ -28,6 +28,18 @@ function parseYuan(s) {
   return isFinite(n) && n > 0 ? n : 0;
 }
 
+function readDefaultTerms() {
+  const settings = wx.getStorageSync('settings') || {};
+  const defaults = loan.createLoanInput();
+  return {
+    annualRate: typeof settings.annualRate === 'number' && isFinite(settings.annualRate) &&
+      settings.annualRate > 0 && settings.annualRate <= 36
+      ? settings.annualRate / 100 : defaults.annualRate,
+    years: Number.isInteger(settings.years) && settings.years > 0 && settings.years <= 30
+      ? settings.years : defaults.years,
+  };
+}
+
 Page({
   data: {
     categoryTabs: CATEGORY_TABS,
@@ -63,9 +75,37 @@ Page({
   },
 
   onLoad() {
-    this.input = loan.createLoanInput();
+    const defaults = readDefaultTerms();
+    this._lastDefaultTerms = defaults;
+    this._openedPlanInput = false;
+    this.input = loan.createLoanInput(defaults);
     this.syncFromInput();
     this.recalc();
+  },
+
+  onShow() {
+    const defaults = readDefaultTerms();
+    const previous = this._lastDefaultTerms;
+    const settingsChanged = !previous || defaults.annualRate !== previous.annualRate ||
+      defaults.years !== previous.years;
+    this._lastDefaultTerms = defaults;
+    const saved = wx.getStorageSync('currentInput');
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+      wx.removeStorageSync('currentInput');
+      if (saved.__source !== 'schedule') this._openedPlanInput = true;
+      this.input = loan.normalizeDownPayment(loan.inputFromJson(saved));
+      this.syncFromInput();
+      this.recalc();
+    }
+    if (settingsChanged && !this._openedPlanInput) {
+      // 默认设置只更新期限和利率，保留正在编辑的金额及其输入框原文。
+      this.input = Object.assign({}, this.input, defaults);
+      this.setData({
+        yearsText: String(defaults.years),
+        rateText: (defaults.annualRate * 100).toFixed(2),
+      });
+      this.recalc();
+    }
   },
 
   onReady() {
@@ -335,7 +375,7 @@ Page({
       wx.showToast({ title: '请先完善输入', icon: 'none' });
       return;
     }
-    wx.setStorageSync('currentInput', loan.inputToJson(this.input));
+    wx.setStorageSync('currentInput', Object.assign({ __source: 'schedule' }, loan.inputToJson(this.input)));
     wx.navigateTo({ url: '/pages/schedule/schedule' });
   },
 

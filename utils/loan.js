@@ -1010,7 +1010,7 @@ const CityPolicy = {
 
   /**
    * 计算公积金可贷额度（元）：
-   * min(余额合计 × 倍数 × 1万, 房价 × 最高贷款成数, 政策上限 × 1万)
+   * min(余额合计（元）× 倍数, 房价（元）× 最高贷款成数, 政策上限（万元）× 1万)
    */
   housingFundLoanable(city, opts) {
     const balance = opts.balance;
@@ -1018,7 +1018,7 @@ const CityPolicy = {
     const housePrice = opts.housePrice;
     const houseType = opts.houseType;
     const totalBalance = balance + spouseBalance;
-    const maxByBalance = totalBalance * city.balanceMultiplier * 10000;
+    const maxByBalance = totalBalance * city.balanceMultiplier;
     const maxByPrice = housePrice * (houseType === HouseType.FIRST ? city.maxLoanRatioFirst : city.maxLoanRatioSecond);
     const maxByPolicy =
       (houseType === HouseType.FIRST ? city.maxHousingFundLoanFirst : city.maxHousingFundLoanSecond) * 10000;
